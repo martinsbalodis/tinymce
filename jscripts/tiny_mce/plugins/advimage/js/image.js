@@ -86,6 +86,9 @@ var ImageDialog = {
 
 		this.changeAppearance();
 		this.showPreviewImage(nl.src.value, 1);
+		
+		// init image upload
+		this.initImageUpload();
 	},
 
 	insert : function(file, title) {
@@ -455,6 +458,40 @@ var ImageDialog = {
 			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this);" onerror="ImageDialog.resetImageData();" />');
 		else
 			tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="ImageDialog.updateImageData(this, 1);" />');
+	}, 
+	
+	initImageUpload : function(){
+		
+		var upload_field = document.getElementById('advimage_upload');
+		
+		// When input field changes start image upload
+		upload_field.onchange = function(){
+			
+			// upload one by one
+			for(var i = 0;i<upload_field.files.length;i++) {
+				
+				var image = upload_field.files[i];
+				
+				
+				var xhr = new XMLHttpRequest();
+				
+				// upload successful event
+				xhr.onload = function(response){
+					// this is insecure!
+					response = eval(response);
+				};
+				
+				// error event
+				xhr.upload.onerror = function(){
+					alert('error!');
+				}
+				
+				xhr.open('POST', '/tinymce/image_upload/receive_image.php', true);
+				xhr.send(image);
+				
+			}
+		};
+		
 	}
 };
 
