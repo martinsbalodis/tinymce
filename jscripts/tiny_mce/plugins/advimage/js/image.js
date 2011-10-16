@@ -492,6 +492,29 @@ var ImageDialog = {
 			}
 		};
 		
+		// Uploaded images on the server
+		this.fetchUploadedImages();
+		
+	},
+	
+	fetchUploadedImages : function(){
+		
+		// Load images from server via ajax
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', '/tinymce/image_upload/uploaded_images.php', true);
+		xhr.onload = function(){
+			// this is insecure!
+			response = eval(xhr.responseText);
+			
+			for(var i in response) {
+				
+				var image = response[i];
+				console.log(image);
+				
+			}
+			
+		};
+		xhr.send(null);
 	}
 };
 
