@@ -463,6 +463,7 @@ var ImageDialog = {
 	initImageUpload : function(){
 		
 		var upload_field = document.getElementById('advimage_upload');
+		var image_popup = this;
 		
 		// When input field changes start image upload
 		upload_field.onchange = function(){
@@ -477,8 +478,9 @@ var ImageDialog = {
 				
 				// upload successful event
 				xhr.onload = function(response){
-					// this is insecure!
-					response = eval(response);
+					
+					// reload image list
+					image_popup.fetchUploadedImages();
 				};
 				
 				// error event
@@ -504,8 +506,7 @@ var ImageDialog = {
 		xhr.open('GET', tinyMCEPopup.getParam('external_images_uploaded_list'), true);
 		xhr.onload = function(){
 			
-			// this is insecure!
-			response = eval(xhr.responseText);
+			response = tinymce.util.JSON.parse(xhr.responseText);
 			
 			var image_list = document.getElementById('uploaded_image_list');
 			
