@@ -11,3 +11,6 @@
 input {width: 280px;}
 #constrain, #onmousemovecheck {width:auto;}
 #id, #dir, #lang, #usemap, #longdesc {width:200px;}
+
+#uploaded_image_list {display:block;height:220px;overflow:auto;padding:0}
+#uploaded_image_list .uploaded_image {display:block;height:60px;padding:3px;border:1px #C5E4ED solid;float:left;cursor:pointer;margin:0 5px 5px 0}

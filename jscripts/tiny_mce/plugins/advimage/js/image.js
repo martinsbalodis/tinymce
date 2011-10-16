@@ -503,13 +503,37 @@ var ImageDialog = {
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', '/tinymce/image_upload/uploaded_images.php', true);
 		xhr.onload = function(){
+			
 			// this is insecure!
 			response = eval(xhr.responseText);
 			
+			var image_list = document.getElementById('uploaded_image_list');
+			
+			// Clear image list
+			image_list.innerHTML = "";
+			
+			// Add images to image lsit
 			for(var i in response) {
 				
 				var image = response[i];
-				console.log(image);
+				
+				var li_image = document.createElement('li');
+				li_image.className = 'uploaded_image';
+				li_image.innerHTML = '<img src="'+image.url+'" height="60px" alt="Image not loaded" />';
+				li_image.image_url = image.url;
+				
+				// clicking on image will choose it.
+				li_image.onclick = function(){
+					console.log(this.image_url);
+					var target_input = document.getElementById('src');
+					target_input.value = this.image_url;
+					target_input.onchange()
+					
+					// switch back to main tab
+					mcTabs.displayTab('general_tab','general_panel');
+				}
+				
+				image_list.appendChild(li_image);
 				
 			}
 			
