@@ -486,7 +486,7 @@ var ImageDialog = {
 					alert('error!');
 				}
 				
-				xhr.open('POST', '/tinymce/image_upload/receive_image.php', true);
+				xhr.open('POST', tinyMCEPopup.getParam('external_image_upload_uri'), true);
 				xhr.send(image);
 				
 			}
@@ -501,7 +501,7 @@ var ImageDialog = {
 		
 		// Load images from server via ajax
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', '/tinymce/image_upload/uploaded_images.php', true);
+		xhr.open('GET', tinyMCEPopup.getParam('external_images_uploaded_list'), true);
 		xhr.onload = function(){
 			
 			// this is insecure!
